@@ -38,7 +38,7 @@
                     </thead>
                     <tbody>
                       @foreach($users as $user)
-                        <tr>
+                        <tr id="item-{{$user->id}}">
                         <td> {{ $user->name }} </td>
                         <td> Aktiv </td>
                         <td> Admin </td>
@@ -46,16 +46,54 @@
                         <td> <span class="badge badge-danger">{{$user->getDate($user->updated_at) }}</span></td>
                         <td>
                           <a href="{{ route('admin.edit', ['id' => $user->id]) }}" class="btn btn-outline-primary btn-sm"><i class="fas fa-edit"></i></a> &nbsp;
-                          <a href="" class="btn btn-outline-danger btn-sm"><i class="far fa-trash-alt"></i></a>
+                          <a href="javascript:void(0)" data-id="{{ $user->id }}" data-item="#item-{{$user->id}}" class="btn btn-outline-danger btn-sm delete-user"><i class="far fa-trash-alt"></i></a>
                         </td>
                         </tr>
                       @endforeach
                     </tbody>
+                    
                 </table>
                 @else
                   <h1>Hec bir netice tapilmadi</h1>
                 @endif
                 
+                <div class="">
+                {{ $users->links() }}
+                </div>
+                
             </div>
     <!-- Table Users list end -->
+@endsection
+@section('js')
+    <script>
+        $(function(){
+          $('.delete-user').click(function(e){
+            e.preventDefault();
+            var id = $(this).data('id');
+            var item = $(this).data('item');
+            var url = '{{route('admin.user-destroy')}}';
+
+            Swal.fire({
+                title: 'Sən əminsən?',
+                text: "Bunu geri qaytara bilməyəcəksiniz!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  $.post(url, {data: id}, function(response){
+                    $(item).remove();
+                    Swal.fire(
+                      'Silindi!',
+                      'Faylınız silindi.',
+                      'success'
+                    )
+                  });
+                }
+              });
+          });
+        });
+    </script>
 @endsection

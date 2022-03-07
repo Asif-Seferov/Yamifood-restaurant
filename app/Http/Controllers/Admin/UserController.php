@@ -16,8 +16,8 @@ class UserController extends Controller
         if(Cache::has('users')){
             $users = Cache::get('users');
         }else{
-            $users = User::orderBy('id', 'DESC')->get();
-            Cache::put('users', $users, 60);
+            $users = User::orderBy('id', 'DESC')->paginate(10);
+            Cache::put('users', $users, 1);
         }
         return view('admin.users.index', compact('users'));
     }
@@ -61,5 +61,15 @@ class UserController extends Controller
             return redirect()->back();
         }
     }
+    // Delete Users
+     public function destroy(Request $request){
+        try{
+            $userId = $request->data;
+            $delete = User::find($userId);
+            $delete->delete();
+        }catch(\Exception $e){
+            echo $e->getMessage();
+        }
+    } 
 
 }
