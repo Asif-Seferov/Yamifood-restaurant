@@ -24,7 +24,7 @@
                 <div class="text-right mb-3">
                     <a href=" {{ route('admin.add-user') }} "><button type="button" class="btn btn-danger"><i class="fas fa-plus"></i>  Add user</button></a>
                 </div>
-                
+                @if(count($users)  > 0)
                 <table class="table table-bordered table-hover">
                     <thead>
                         <tr>
@@ -32,6 +32,7 @@
                         <th scope="col">Status</th>
                         <th scope="col">Role</th>
                         <th scope="col">Created</th>
+                        <th scope="col">Updated</th>
                         <th scope="col">Action</th>
                         </tr>
                     </thead>
@@ -42,14 +43,19 @@
                         <td> Aktiv </td>
                         <td> Admin </td>
                         <td> <span class="badge badge-info">{{$user->getDate($user->created_at) }}</span></td>
+                        <td> <span class="badge badge-danger">{{$user->getDate($user->updated_at) }}</span></td>
                         <td>
-                          <a href="" class="btn btn-outline-primary btn-sm"><i class="fas fa-edit"></i></a> &nbsp;
+                          <a href="{{ route('admin.edit', ['id' => $user->id]) }}" class="btn btn-outline-primary btn-sm"><i class="fas fa-edit"></i></a> &nbsp;
                           <a href="" class="btn btn-outline-danger btn-sm"><i class="far fa-trash-alt"></i></a>
                         </td>
                         </tr>
                       @endforeach
                     </tbody>
                 </table>
+                @else
+                  <h1>Hec bir netice tapilmadi</h1>
+                @endif
+                
             </div>
     <!-- Table Users list end -->
 @endsection

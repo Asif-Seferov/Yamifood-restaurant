@@ -24,6 +24,8 @@ Route::group(['namespace' => 'admin', 'prefix' => 'admin', 'as' => 'admin.'], fu
         Route::get('/', [UserController::class, 'index'])->name('user');
         Route::get('/create', [UserController::class, 'create'])->name('add-user');
         Route::post('/user', [UserController::class, 'store'])->name('store');
+        Route::get('/edit/{id}', [UserController::class, 'edit'])->name('edit');
+        Route::post('/update/{id}', [UserController::class, 'update'])->name('update');
     }); 
 });
     
