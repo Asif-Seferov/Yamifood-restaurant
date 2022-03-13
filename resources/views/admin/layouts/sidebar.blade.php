@@ -49,15 +49,9 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/charts/inline.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Inline</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/charts/uplot.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>uPlot</p>
+                <a href="{{ route('admin.permission') }}" class="nav-link">
+                <i class="fab fa-accessible-icon ml-2"></i>
+                  <p class="ml-2">Permissions</p>
                 </a>
               </li>
             </ul>

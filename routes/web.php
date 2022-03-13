@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\PermissionController;
 
 Route::group(['namespace' => 'admin', 'prefix' => 'admin', 'as' => 'admin.'], function(){
     Route::get('/home', function () {
@@ -24,6 +25,14 @@ Route::group(['namespace' => 'admin', 'prefix' => 'admin', 'as' => 'admin.'], fu
         Route::get('/{slug}/edit/{id}', [RoleController::class, 'edit'])->name('role-edit');
         Route::put('/update/{id}', [RoleController::class, 'update'])->name('role-update');
         Route::post('/delete', [RoleController::class, 'destroy'])->name('role-destroy');
+    });
+    // PermissionController actions
+    Route::prefix('permissions')->group(function(){
+        Route::get('/', [PermissionController::class, 'index'])->name('permission');
+        Route::post('/create', [PermissionController::class, 'store'])->name('permission-store');
+        Route::get('/{slug}/edit/{id}', [PermissionController::class, 'edit'])->name('permission-edit');
+        Route::post('/update/{id}', [PermissionController::class, 'update'])->name('permission-update');
+        Route::post('/delete', [PermissionController::class, 'destroy'])->name('permission-destroy');
     });
 });
     
