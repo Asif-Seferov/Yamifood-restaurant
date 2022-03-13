@@ -27,7 +27,10 @@
                       @csrf
                     <div class="form-group">
                         <label for="name">Name</label>
-                        <input type="text" name="name" class="form-control" id="name">
+                        <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" id="name">
+                        @error('name')
+                          {{$message}}
+                        @enderror
                     </div>
                     <button type="submit" class="btn btn-success">Create</button>
                     </form>

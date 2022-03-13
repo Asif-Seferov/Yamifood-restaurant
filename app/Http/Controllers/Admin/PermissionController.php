@@ -14,6 +14,9 @@ class PermissionController extends Controller
         return view('admin.permissions.index', compact('permissions'));
     }
     public function store(Request $request){
+        $request->validate([
+            'name' => 'required|min:3|max:50',
+        ]);
         try{
             Permission::create(['name' => $request->name]);
             toastr()->success('Permission add successfully!', 'Success');
