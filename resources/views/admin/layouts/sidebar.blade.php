@@ -43,9 +43,9 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/charts/flot.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Flot</p>
+                <a href="{{ route('admin.role') }}" class="nav-link">
+                  <i class="fas fa-user-tag"></i>
+                  <p>Roles</p>
                 </a>
               </li>
               <li class="nav-item">

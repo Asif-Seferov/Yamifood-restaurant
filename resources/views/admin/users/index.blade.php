@@ -46,7 +46,7 @@
                         <td> <span class="badge badge-danger">{{$user->getDate($user->updated_at) }}</span></td>
                         <td>
                           <a href="{{ route('admin.edit', ['id' => $user->id]) }}" class="btn btn-outline-primary btn-sm"><i class="fas fa-edit"></i></a> &nbsp;
-                          <a href="javascript:void(0)" data-id="{{ $user->id }}" data-item="#item-{{$user->id}}" class="btn btn-outline-danger btn-sm delete-user"><i class="far fa-trash-alt"></i></a>
+                          <a href="javascript:void(0)" data-id="{{ $user->id }}" data-item="#item-{{$user->id}}" class="btn btn-outline-danger btn-sm delete-user"><i class="fas fa-trash-alt"></i></a>
                         </td>
                         </tr>
                       @endforeach

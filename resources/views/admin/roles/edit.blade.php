@@ -1,0 +1,35 @@
+@extends('admin.layouts.main')
+@section('title', 'AdminLTE 3 | Edit role')
+@section('content')
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0">Update role</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href=" {{ route('admin.role') }} ">Roles</a></li>
+              <li class="breadcrumb-item active">Update role</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Edit role form start -->
+    <div class="col-md-6">
+        <form action=" {{ route('admin.role-update', ['id' => $role->id]) }} " method="post">
+            @csrf
+            @method('PUT')
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" name="name" class="form-control" id="name" value="{{ $role->name }}">
+            </div>
+            <button type="submit" class="btn btn-success">Update</button>
+        </form>
+    </div>
+    <!-- Edit role form end -->
+@endsection
