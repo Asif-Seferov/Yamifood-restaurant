@@ -28,4 +28,8 @@ class Role extends Model
     public function getDate($date){
         return Carbon::parse($date)->diffForHumans(Carbon::now());
     }
+
+    public function permissions(){
+        return $this->belongsToMany(Permission::class, 'roles_permissions');
+    }
 }
