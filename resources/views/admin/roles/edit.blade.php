@@ -28,6 +28,18 @@
                 <label for="name">Name</label>
                 <input type="text" name="name" class="form-control" id="name" value="{{ $role->name }}">
             </div>
+            @php
+            @endphp
+              @foreach($permissions as $permission)
+                  <div class="div d-flex align-items-center justify-content-between">
+                    <label for="{{$permission->name}}" class="mr-5">{{$permission->name}}</label>
+                      <label class="switch">
+                        <input type="checkbox" @foreach($role->permissions as $rolePermission) @if($rolePermission->id === $permission->id) checked @endif @endforeach name="permissions[]" value="{{$permission->id}}" class="text-right" id="{{$permission->name}}">
+                        <span class="slider round"></span>
+                      </label>
+                  </div>
+              @endforeach
+               
             <button type="submit" class="btn btn-success">Update</button>
         </form>
     </div>

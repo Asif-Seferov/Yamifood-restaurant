@@ -32,6 +32,17 @@
                           {{$message}}
                         @enderror
                     </div>
+                    
+                    @foreach($permissions as $permission)
+                      <div class="div d-flex align-items-center justify-content-between">
+                      <label for="{{$permission->name}}" class="mr-5">{{$permission->name}}</label>
+                        <label class="switch">
+                          <input type="checkbox" name="permissions[]" value="{{$permission->id}}" class="text-right" id="{{$permission->name}}">
+                          <span class="slider round"></span>
+                        </label>
+                      </div>
+                    @endforeach
+
                     <button type="submit" class="btn btn-success">Create</button>
                     </form>
                 </div>
@@ -42,8 +53,9 @@
                         <tr>
                         <th scope="col">Name</th>
                         <th scope="col">Slug</th>
+                        <th scope="col">Permissions</th>
                         <th scope="col">Created</th>
-                        <th scope="col">Updated</th>
+                       
                         <th scope="col">Actions</th>
                         </tr>
                     </thead>
@@ -52,8 +64,20 @@
                         <tr id="item-{{$role->id}}">
                         <td> {{ $role->name }} </td>
                         <td> {{ $role->slug }} </td>
+                        <td>
+                          @if($role->permissions != null && count($role->permissions) <= 4)
+                            @foreach($role->permissions as $permission)
+                              <span class="badge badge-secondary">{{$permission->name}}</span>
+                            @endforeach
+                          @endif
+                          @if(count($role->permissions) >= 5)
+                              <span class="badge badge-success">+5 permissions</span>
+                          @endif
+                          @if(count($role->permissions) == 0)
+                              <span class="badge badge-danger">null</span>
+                          @endif
+                        </td>
                         <td><span class="badge badge-info">{{ $role->getDate($role->created_at) }}</span></td>
-                        <td><span class="badge badge-warning">{{ $role->getDate($role->updated_at) }}</span></td>
                         <td>
                           <a href=" {{ route('admin.role-edit', ['slug' => $role->slug, 'id' => $role->id]) }} " class="btn btn-outline-primary btn-sm"><i class="fas fa-edit"></i></a> &nbsp;
                           <a href="javascript:void(0)" data-item="#item-{{$role->id}}" data-id="{{$role->id}}" class="btn btn-outline-danger btn-sm delete-role"><i class="fas fa-trash-alt"></i></a>

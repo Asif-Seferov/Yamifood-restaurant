@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Role;
+use App\Models\Permission;
+
 
 class RoleController extends Controller
 {
@@ -16,7 +18,8 @@ class RoleController extends Controller
     public function index()
     {
         $roles = Role::orderBy('id', 'DESC')->paginate(10);
-        return view('admin.roles.index', ['roles' => $roles]);
+        $permissions = Permission::orderBy('id', 'desc')->get();
+        return view('admin.roles.index', ['roles' => $roles, 'permissions' => $permissions]);
     }
 
     /**
@@ -41,15 +44,17 @@ class RoleController extends Controller
             'name' => 'required|min:3|max:50',
         ]);
         try{
-            
-            Role::create([
-                'name' => $request->name,
-            ]);
+            $role = new Role();
+            $role->name = $request->name;
+            $role->save();
+            $role->permissions()->attach($request->permissions);
+            $role->save();
             toastr()->success('Role add successfully!', 'Success');
             return redirect()->back();
         }catch(\Exception $e){
-            toastr()->error("User don't add!", "Error" . $e->getMessage());
-            return redirect()->back();
+            echo $e->getMessage();
+            //toastr()->error("User don't add!", "Error" . $e->getMessage());
+            //return redirect()->back();
         }
     }
 
@@ -73,7 +78,8 @@ class RoleController extends Controller
     public function edit($slug, $id)
     {
         $role = Role::where(['slug' => $slug,'id' => $id])->firstOrFail();
-        return view('admin.roles.edit')->with('role', $role);
+        $permissions = Permission::orderBy('id', 'desc')->get();
+        return view('admin.roles.edit')->with(['role' => $role, 'permissions' => $permissions]);
     }
 
     /**
@@ -86,14 +92,22 @@ class RoleController extends Controller
     public function update(Request $request, $id)
     {
        try{
+           //dd($request->permissions);
+
             $role = Role::find($id);
             $role->name = $request->name;
             $role->update();
+            $role->permissions()->detach();
+            
+            $role->permissions()->attach($request->permissions);
+            $role->update();
+            
             toastr()->success('Role update successfully!', 'Success');
             return redirect()->route('admin.role');
        }catch(\Exception $e){
-            toaster()->error("Role don't update", 'Error');
-            return redirect()->back();
+           echo $e->getMessage();
+            //toastr()->error("Role don't update", 'Error' . $e->getMessage());
+            //return redirect()->back();
        }
     }
 
@@ -107,8 +121,9 @@ class RoleController extends Controller
     {
         try{
             $id = $request->id;
-            $delete = Role::where('id', $id)->first();
-            $delete->delete();
+            $role = Role::where('id', $id)->first();
+            $role->permissions()->detach($id);
+            $role->delete();
         }catch(\Eexception $e){
             echo $e->getMessage();
         }
