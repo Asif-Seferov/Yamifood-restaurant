@@ -15,6 +15,7 @@
     margin-left: 5px;
 }
 
+
 /* Switch checkbox */
 .switch {
     position: relative;
@@ -79,6 +80,6 @@
 /* media query */
 @media screen and (max-width: 590px) {
     .table{
-        font-size: 14px; 
+        font-size: 12px; 
     }
 }

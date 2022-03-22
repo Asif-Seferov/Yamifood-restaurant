@@ -25,12 +25,12 @@
                     <a href=" {{ route('admin.add-user') }} "><button type="button" class="btn btn-danger"><i class="fas fa-plus"></i>  Add user</button></a>
                 </div>
                 @if(count($users)  > 0)
-                <table class="table table-bordered table-hover">
+                <table class="table table-bordered table-hover table-user">
                     <thead>
                         <tr>
                         <th scope="col">Name</th>
-                        <th scope="col">Status</th>
                         <th scope="col">Role</th>
+                        <th scope="col">Permissions</th>
                         <th scope="col">Created</th>
                         <th scope="col">Updated</th>
                         <th scope="col">Action</th>
@@ -40,8 +40,29 @@
                       @foreach($users as $user)
                         <tr id="item-{{$user->id}}">
                         <td> {{ $user->name }} </td>
-                        <td> Aktiv </td>
-                        <td> Admin </td>
+                        <td>
+                          @if($user->roles->isEmpty())
+                            <span class="badge badge-danger">null</span>
+                          @endif
+                          @if($user->roles->isNotEmpty())
+                            @foreach($user->roles as $role)
+                              <span class="badge badge-secondary">{{$role->name}}</span>
+                            @endforeach
+                          @endif
+                        </td>
+                        <td>
+                          @if($user->permissions->isEmpty())
+                            <div class="badge badge-danger">null</div>
+                          @endif
+                          @if(count($user->permissions) >= 5)
+                                <span class="badge badge-success">+5 permissions</span>
+                          @endif
+                          @if($user->permissions->isNotEmpty() && count($user->permissions) <= 4)
+                            @foreach($user->permissions as $permission)
+                              <span class="badge badge-secondary">{{$permission->name}}</span>
+                            @endforeach
+                          @endif
+                        </td>
                         <td> <span class="badge badge-info">{{$user->getDate($user->created_at) }}</span></td>
                         <td> <span class="badge badge-danger">{{$user->getDate($user->updated_at) }}</span></td>
                         <td>
