@@ -57,10 +57,10 @@
             </ul>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-user"></i>
-              <p>
-                Users
+            <a href="{{route('admin.logout')}}" class="nav-link">
+            <i class="fas fa-sign-out ml-2"></i>
+              <p class="ml-2">
+                Log out
               </p>
             </a>
           </li>

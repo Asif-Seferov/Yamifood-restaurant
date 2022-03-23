@@ -18,7 +18,6 @@
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
-
     <!-- Table Users list start -->
             <div class="col-md-12">
                 <div class="text-right mb-3">

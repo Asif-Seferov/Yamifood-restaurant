@@ -4,8 +4,15 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Admin\LoginController;
 
-Route::group(['namespace' => 'admin', 'prefix' => 'admin', 'as' => 'admin.'], function(){
+/* LoginController */
+Route::get('/login', [LoginController::class, 'index'])->name('login');
+Route::post('/check-login', [LoginController::class, 'authenticate'])->name('login.authenticate');
+
+Route::group(['namespace' => 'admin', 'middleware' => 'auth', 'prefix' => 'admin', 'as' => 'admin.'], function(){
+    // Log out
+    Route::get('/logout', [LoginController::class, 'log_out'])->name('logout');
     Route::get('/home', function () {
         return view('admin.index');
     })->name('home');
