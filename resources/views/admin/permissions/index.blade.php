@@ -21,6 +21,7 @@
     <!-- Permission field start -->
     <div class="container-fluid">
         <div class="row">
+            
             <div class="col-sm-3">
                 <form action="{{ route('admin.permission-store') }}" method="post">
                     @csrf
@@ -34,6 +35,7 @@
                     <button type="submit" class="btn btn-success">Create</button>
                 </form>
             </div>
+          
             <div class="col-sm-9 pl-sm-5  mt-3">
             @if(count($permissions) > 0)
             <table class="table table-bordered table-hover">
@@ -54,8 +56,13 @@
                     <td><span class="badge badge-info">{{$permission->getDate($permission->created_at)}}</span></td>
                     <td><span class="badge badge-warning">{{$permission->getDate($permission->updated_at)}}</span></td>
                     <td>
-                        <a href="{{ route('admin.permission-edit', ['slug' => $permission->slug, 'id' => $permission->id]) }}" class="btn btn-outline-primary btn-sm"><i class="fas fa-edit"></i></a> &nbsp;
+                        @can('update', $permission)
+                        <a href="{{ route('admin.permission-edit', ['slug' => $permission->slug, 'id' => $permission->id]) }}" class="btn btn-outline-primary btn-sm"><i class="fas fa-edit"></i></a>
+                        @endcan
+                         &nbsp;
+                         @cannot('isManager')
                         <a href="javascript:void(0)" data-id="{{$permission->id}}" data-item="#item-{{$permission->id}}" class="btn btn-outline-danger btn-sm delete-permission"><i class="fas fa-trash-alt"></i></a>
+                        @endcannot
                     </td>
                     </tr>
                     @endforeach

@@ -14,7 +14,11 @@
           <img src=" {{ asset('admin/assets/img/user2-160x160.jpg') }} " class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
+          <a href="#" class="d-block">
+            @auth
+              {{Auth::user()->name}} ({{ Auth::user()->roles->isNotEmpty() ? Auth::user()->roles->first()->name : ""}})
+            @endauth
+          </a>
         </div>
       </div>
 
@@ -34,6 +38,7 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
+              @canany(['isAdmin', 'isManager'])
               <li class="nav-item">
                 <a href=" {{ route('admin.user') }} " class="nav-link">
                   <i class="nav-icon fas fa-user"></i>
@@ -42,12 +47,15 @@
                   </p>
                 </a>
               </li>
+              @endcanany
+              @can('isAdmin')
               <li class="nav-item">
                 <a href="{{ route('admin.role') }}" class="nav-link">
                   <i class="fas fa-user-tag"></i>
                   <p>Roles</p>
                 </a>
               </li>
+              @endcan
               <li class="nav-item">
                 <a href="{{ route('admin.permission') }}" class="nav-link">
                 <i class="fab fa-accessible-icon ml-2"></i>

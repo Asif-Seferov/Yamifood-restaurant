@@ -37,7 +37,8 @@
                     </thead>
                     <tbody>
                       @foreach($users as $user)
-                        <tr id="item-{{$user->id}}">
+                        @if(!\Auth::user()->HasRole('admin') && $user->HasRole('admin')) @continue; @endif
+                        <tr id="item-{{$user->id}}" {{Auth::user()->id == $user->id ? "bgcolor=#ddd" : "null"}}>
                         <td> {{ $user->name }} </td>
                         <td>
                           @if($user->roles->isEmpty())
