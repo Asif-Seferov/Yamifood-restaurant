@@ -65,6 +65,14 @@
             </ul>
           </li>
           <li class="nav-item">
+            <a href="{{route('admin.menu')}}" class="nav-link">
+            <i class="fas fa-bars ml-2"></i>
+              <p class="ml-2">
+                Menus
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
             <a href="{{route('admin.logout')}}" class="nav-link">
             <i class="fas fa-sign-out ml-2"></i>
               <p class="ml-2">

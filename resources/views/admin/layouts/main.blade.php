@@ -31,6 +31,7 @@
   <link rel="stylesheet" href=" {{ asset('admin/assets/css/style.css') }} ">
   <!-- Fontawesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+  @yield('select_css')
   @toastr_css
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -111,5 +112,6 @@
     @toastr_render
 @yield('js')
 @yield('js_user_page')
+@yield('select_js')
 </body>
 </html>
