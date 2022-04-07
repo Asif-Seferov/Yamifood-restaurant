@@ -108,6 +108,9 @@
 <script src=" {{ asset('admin/assets/js/pages/dashboard.js') }} "></script>
 <!-- Swwet alert 2 -->
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- Jquery ui js -->
+<script src="{{asset('admin/assets/js/jquery-ui.js')}}"></script>
+
     @toastr_js
     @toastr_render
 @yield('js')

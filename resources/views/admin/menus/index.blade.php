@@ -31,6 +31,16 @@
                             {{$message}}
                         @enderror
                     </div>
+                    <div class="d-flex justify-content-between mb-3">
+                      <div class="custom-control custom-switch">
+                        <input type="radio" class="custom-control-input" id="activeMenu" name="status" value="active">
+                        <label class="custom-control-label" for="activeMenu">Active</label>
+                      </div>
+                      <div class="custom-control custom-switch">
+                        <input type="radio" class="custom-control-input" id="passiveMenu" name="status" value="passive">
+                        <label class="custom-control-label" for="passiveMenu">Passive</label>
+                      </div>
+                    </div>
                     <button type="submit" class="btn btn-success mb-3">Create</button>
                 </form>
             </div>
@@ -38,35 +48,94 @@
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Handle</th>
+                    <th scope="col">Number</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Actions</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
+                <tbody class="sortable">
+                    @foreach($menus as $key => $menu)
+                    <tr id="item-{{$menu->id}}">
+                    <th scope="row">{{$key + 1}}</th>
+                    <td>{{$menu->name}}</td>
+                    <td>
+                      @if($menu->status === "active")
+                        <span class="badge badge-success">{{$menu->status}}</span>
+                      @else
+                        <span class="badge badge-danger">{{$menu->status}}</span>
+                      @endif
+                      
+                    </td>
+                    <td>
+                      <a href="{{route('admin.edit-menu', $menu->id)}}" class="btn btn-outline-primary btn-sm"><i class="fas fa-edit"></i></a> &nbsp;
+                      <a href="javascript:void(0)" class="btn btn-outline-danger btn-sm delete-menu" data-id="{{$menu->id}}" data-item="#item-{{$menu->id}}"><i class="fas fa-trash-alt"></i></a>
+                    </td>
                     </tr>
-                    <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                    </tr>
-                    <tr>
-                    <th scope="row">3</th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                    </tr>
+                    @endforeach
                 </tbody>
                 </table>
+                <div class="d-flex justify-content-end">{{$menus->links()}}</div>
             </div>
         </div>
     </div>
     <!-- Menu form and table end -->
+@endsection
+@section('js')
+    <script>
+        $( function() {
+          $('.sortable').sortable({
+            cursor: "move",
+            opacity: 0.4,
+            axis: "y",
+            update: function(event, ui){
+              var myData = $(this).sortable('serialize');
+              $.ajax({
+                type: "POST",
+                url: '{{route('admin.menu-list')}}',
+                data: myData,
+                dataType: "text",
+                 success: function(response){
+                  Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'The ranking has been updated',
+                    showConfirmButton: false,
+                    timer: 1500
+                  });
+                } 
+              });
+            }
+          });
+          $('.delete-menu').click(function(e){
+              e.preventDefault();
+              var id = $(this).attr('data-id');
+              var item = $(this).data('item');
+              var url = '{{route('admin.destroy-menu')}}';
+
+              Swal.fire({
+                  title: 'Are you sure?',
+                  text: "You won't be able to revert this!",
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    $.post(url,
+                      {id: id},
+                      function(response){
+                      $(item).remove();
+                      Swal.fire(
+                      'Deleted!',
+                      'Your file has been deleted.',
+                      'success'
+                        )
+                    });
+                  }
+              });
+          });
+        });
+    </script>
 @endsection

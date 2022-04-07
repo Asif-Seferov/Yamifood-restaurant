@@ -12,7 +12,7 @@ use App\Http\Controllers\Admin\MenuController;
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/check-login', [LoginController::class, 'authenticate'])->name('login.authenticate');
 
-Route::group(['namespace' => 'admin',  'prefix' => 'admin', 'as' => 'admin.'], function(){
+Route::group(['namespace' => 'admin', 'middleware' => 'auth', 'prefix' => 'admin', 'as' => 'admin.'], function(){
     // Log out
     Route::get('/logout', [LoginController::class, 'log_out'])->name('logout');
     Route::get('/home', function () {
@@ -52,6 +52,10 @@ Route::group(['namespace' => 'admin',  'prefix' => 'admin', 'as' => 'admin.'], f
     Route::prefix('menu')->group(function(){
         Route::get('/', [MenuController::class, 'index'])->name('menu');
         Route::post('/create', [MenuController::class, 'store'])->name('menu-store');
+        Route::post('/', [MenuController::class, 'menu_list'])->name('menu-list');
+        Route::get('/edit/{id}', [MenuController::class, 'edit'])->name('edit-menu');
+        Route::post('/update/{id}', [MenuController::class, 'update'])->name('update-menu');
+        Route::post('/delete', [MenuController::class, 'destroy'])->name('destroy-menu');
     });
 });
 
