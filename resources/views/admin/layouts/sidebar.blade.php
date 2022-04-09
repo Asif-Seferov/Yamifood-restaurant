@@ -29,7 +29,8 @@
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-               <li class="nav-item">
+          @can('isAdmin')
+          <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="fas fa-users f-2x mr-1"></i>
               <p class="user-paragraf">
@@ -38,7 +39,6 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
-              @canany(['isAdmin', 'isManager'])
               <li class="nav-item">
                 <a href=" {{ route('admin.user') }} " class="nav-link">
                   <i class="nav-icon fas fa-user"></i>
@@ -47,15 +47,12 @@
                   </p>
                 </a>
               </li>
-              @endcanany
-              @can('isAdmin')
               <li class="nav-item">
                 <a href="{{ route('admin.role') }}" class="nav-link">
                   <i class="fas fa-user-tag"></i>
                   <p>Roles</p>
                 </a>
               </li>
-              @endcan
               <li class="nav-item">
                 <a href="{{ route('admin.permission') }}" class="nav-link">
                 <i class="fab fa-accessible-icon ml-2"></i>
@@ -64,6 +61,7 @@
               </li>
             </ul>
           </li>
+          @endcan
           <li class="nav-item">
             <a href="{{route('admin.menu')}}" class="nav-link">
             <i class="fas fa-bars ml-2"></i>

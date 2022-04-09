@@ -67,4 +67,9 @@ class MenuController extends Controller
             echo $e->getMessage();
         }
     }
+    // For Template
+    public function menu(){
+        $menus = Menu::all();
+        return view('template.layouts.header', compact('menus'));
+    }
 }

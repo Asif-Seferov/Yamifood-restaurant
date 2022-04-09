@@ -22,6 +22,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-3">
+              @canany(['isAdmin','isUser','isAuthor'])
                 <form action="{{route('admin.menu-store')}}" method="post">
                     @csrf
                     <div class="form-group">
@@ -43,6 +44,7 @@
                     </div>
                     <button type="submit" class="btn btn-success mb-3">Create</button>
                 </form>
+                @endcanany
             </div>
             <div class="col-sm-9 pl-sm-3">
             <table class="table table-bordered table-hover">
@@ -51,7 +53,9 @@
                     <th scope="col">Number</th>
                     <th scope="col">Name</th>
                     <th scope="col">Status</th>
+                    @cannot('isAuthor')
                     <th scope="col">Actions</th>
+                    @endcannot
                     </tr>
                 </thead>
                 <tbody class="sortable">
@@ -67,11 +71,15 @@
                       @endif
                       
                     </td>
+                    @cannot('isAuthor')
                     <td>
                       <a href="{{route('admin.edit-menu', $menu->id)}}" class="btn btn-outline-primary btn-sm"><i class="fas fa-edit"></i></a> &nbsp;
+                      @cannot('isEditor')
                       <a href="javascript:void(0)" class="btn btn-outline-danger btn-sm delete-menu" data-id="{{$menu->id}}" data-item="#item-{{$menu->id}}"><i class="fas fa-trash-alt"></i></a>
+                      @endcannot
                     </td>
                     </tr>
+                    @endcannot
                     @endforeach
                 </tbody>
                 </table>

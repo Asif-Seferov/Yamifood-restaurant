@@ -19,7 +19,7 @@ Route::group(['namespace' => 'admin', 'middleware' => 'auth', 'prefix' => 'admin
         return view('admin.index');
     })->name('home');
     //UserController actions
-    Route::middleware('role:manager,admin')->group(function() {
+    Route::middleware('role:admin')->group(function() {
         Route::prefix('users')->group(function(){
             Route::get('/', [UserController::class, 'index'])->name('user');
             Route::get('/create', [UserController::class, 'create'])->name('add-user');
@@ -28,36 +28,43 @@ Route::group(['namespace' => 'admin', 'middleware' => 'auth', 'prefix' => 'admin
             Route::post('/update/{id}', [UserController::class, 'update'])->name('update');
             Route::post('/delete', [UserController::class, 'destroy'])->name('user-destroy');
         }); 
-    });
-   
-    //RoleController actions
-    Route::middleware('can:isAdmin')->group(function(){
-        Route::prefix('roles')->group(function(){
-            Route::get('/', [RoleController::class, 'index'])->name('role');
-            Route::post('/roles', [RoleController::class, 'store'])->name('role-store');
-            Route::get('/{slug}/edit/{id}', [RoleController::class, 'edit'])->name('role-edit');
-            Route::put('/update/{id}', [RoleController::class, 'update'])->name('role-update');
-            Route::post('/delete', [RoleController::class, 'destroy'])->name('role-destroy');
+        //RoleController actions
+            Route::prefix('roles')->group(function(){
+                Route::get('/', [RoleController::class, 'index'])->name('role');
+                Route::post('/roles', [RoleController::class, 'store'])->name('role-store');
+                Route::get('/{slug}/edit/{id}', [RoleController::class, 'edit'])->name('role-edit');
+                Route::put('/update/{id}', [RoleController::class, 'update'])->name('role-update');
+                Route::post('/delete', [RoleController::class, 'destroy'])->name('role-destroy');
+            });
+        // PermissionController actions
+        Route::prefix('permissions')->group(function(){
+            Route::get('/', [PermissionController::class, 'index'])->name('permission');
+            Route::post('/create', [PermissionController::class, 'store'])->name('permission-store');
+            Route::get('/{slug}/edit/{id}', [PermissionController::class, 'edit'])->name('permission-edit');
+            Route::post('/update/{id}', [PermissionController::class, 'update'])->name('permission-update');
+            Route::post('/delete', [PermissionController::class, 'destroy'])->name('permission-destroy');
         });
     });
-    // PermissionController actions
-    Route::prefix('permissions')->group(function(){
-        Route::get('/', [PermissionController::class, 'index'])->name('permission');
-        Route::post('/create', [PermissionController::class, 'store'])->name('permission-store');
-        Route::get('/{slug}/edit/{id}', [PermissionController::class, 'edit'])->name('permission-edit');
-        Route::post('/update/{id}', [PermissionController::class, 'update'])->name('permission-update');
-        Route::post('/delete', [PermissionController::class, 'destroy'])->name('permission-destroy');
-    });
-    // MenuController actions
-    Route::prefix('menu')->group(function(){
-        Route::get('/', [MenuController::class, 'index'])->name('menu');
-        Route::post('/create', [MenuController::class, 'store'])->name('menu-store');
-        Route::post('/', [MenuController::class, 'menu_list'])->name('menu-list');
-        Route::get('/edit/{id}', [MenuController::class, 'edit'])->name('edit-menu');
-        Route::post('/update/{id}', [MenuController::class, 'update'])->name('update-menu');
-        Route::post('/delete', [MenuController::class, 'destroy'])->name('destroy-menu');
-    });
+        // MenuController actions
+        Route::prefix('menu')->group(function(){
+            Route::middleware('role:admin,user,author,editor')->group(function(){
+                Route::get('/', [MenuController::class, 'index'])->name('menu');
+            });
+                Route::post('/create', [MenuController::class, 'store'])->name('menu-store')->middleware('role:admin,user,author');
+                Route::post('/', [MenuController::class, 'menu_list'])->name('menu-list')->middleware('role:admin');
+                Route::get('/edit/{id}', [MenuController::class, 'edit'])->name('edit-menu')->middleware('role:admin,user,editor');
+                Route::post('/update/{id}', [MenuController::class, 'update'])->name('update-menu')->middleware('role:admin,user,editor');
+                Route::post('/delete', [MenuController::class, 'destroy'])->name('destroy-menu')->middleware('role:admin,user');
+        });
 });
+
+// Remplate routes
+Route::group(['prefix' => 'yamifood', 'as' => 'template.'], function(){
+    Route::get('/home', function(){
+        return view('template.index');
+    })->name('yamifood');
+});
+
 
  
     
