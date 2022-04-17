@@ -31,7 +31,12 @@
   <link rel="stylesheet" href=" {{ asset('admin/assets/css/style.css') }} ">
   <!-- Fontawesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
-  @yield('select_css')
+  <script src="{{asset('admin/assets/js/dropzone.js')}}"></script>
+<!-- <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script> -->
+ <!-- Dropzone css file -->
+ <link rel="stylesheet" href="{{asset('admin/assets/css/dropzone.css')}}">
+  <!-- <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" /> -->
+  @yield('_css')
   @toastr_css
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -85,10 +90,10 @@
 <!-- ChartJS -->
 <script src=" {{ asset('admin/assets/js/Chart.min.js') }} "></script>
 <!-- Sparkline -->
-<script src=" {{ asset('admin/assets/js/sparkline.js') }} "></script>
+<!-- <script src=" {{ asset('admin/assets/js/sparkline.js') }} "></script> -->
 <!-- JQVMap -->
-<script src=" {{ asset('admin/assets/js/jquery.vmap.min.js') }} "></script>
-<script src=" {{ asset('admin/assets/js/jquery.vmap.usa.js') }} "></script>
+<!-- <script src=" {{ asset('admin/assets/js/jquery.vmap.min.js') }} "></script>
+<script src=" {{ asset('admin/assets/js/jquery.vmap.usa.js') }} "></script> -->
 <!-- jQuery Knob Chart -->
 <script src=" {{ asset('admin/assets/js/jquery.knob.min.js') }} "></script>
 <!-- daterangepicker -->
@@ -105,16 +110,18 @@
 <!-- AdminLTE for demo purposes -->
 <script src=" {{ asset('admin/assets/js/demo.js') }} "></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src=" {{ asset('admin/assets/js/pages/dashboard.js') }} "></script>
+<!-- <script src=" {{ asset('admin/assets/js/pages/dashboard.js') }} "></script> -->
 <!-- Swwet alert 2 -->
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- Jquery ui js -->
 <script src="{{asset('admin/assets/js/jquery-ui.js')}}"></script>
+<script src="{{asset('admin/assets/js/upload-slider.js')}}"></script>
+
 
     @toastr_js
     @toastr_render
 @yield('js')
 @yield('js_user_page')
-@yield('select_js')
+@yield('dropzone_js')
 </body>
 </html>

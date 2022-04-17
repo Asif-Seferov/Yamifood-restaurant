@@ -28,8 +28,8 @@
                     <div class="form-group">
                         <label for="menu">Name</label>
                         <input type="text" class="form-control @error('menu') is-invalid @enderror" id="menu" name="menu">
-                        @error('name')
-                            {{$message}}
+                        @error('menu')
+                        <span class="text-danger">{{$message}}</span>
                         @enderror
                     </div>
                     <div class="d-flex justify-content-between mb-3">

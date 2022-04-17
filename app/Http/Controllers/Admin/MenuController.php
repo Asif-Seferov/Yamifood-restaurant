@@ -25,7 +25,7 @@ class MenuController extends Controller
     }
     public function store(Request $request){
         $request->validate([
-            'menu' => 'required',
+            'menu' => 'required|min:3|max:255',
         ]);
         try{
             $menu = new Menu();

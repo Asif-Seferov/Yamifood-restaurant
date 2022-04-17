@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\MenuController;
+use App\Http\Controllers\Admin\SliderController;
 
 
 /* LoginController */
@@ -55,6 +56,15 @@ Route::group(['namespace' => 'admin', 'middleware' => 'auth', 'prefix' => 'admin
                 Route::get('/edit/{id}', [MenuController::class, 'edit'])->name('edit-menu')->middleware('role:admin,user,editor');
                 Route::post('/update/{id}', [MenuController::class, 'update'])->name('update-menu')->middleware('role:admin,user,editor');
                 Route::post('/delete', [MenuController::class, 'destroy'])->name('destroy-menu')->middleware('role:admin,user');
+        });
+        // SliderController actions
+        Route::prefix('slider')->group(function(){
+            Route::get('/', [SliderController::class, 'index'])->name('slider');
+            Route::get('/create', [SliderController::class, 'create'])->name('create-slider');
+            Route::post('/store', [SliderController::class, 'store'])->name('store-slider');
+            Route::get('/edit/{id}', [SliderController::class, 'edit'])->name('edit-slider');
+            Route::post('/update/{id}', [SliderController::class, 'update'])->name('update-slider');
+            Route::post('/delete', [SliderController::class, 'destroy'])->name('destroy-slider');
         });
 });
 

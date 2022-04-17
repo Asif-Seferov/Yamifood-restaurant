@@ -34,7 +34,7 @@
             <a href="#" class="nav-link">
               <i class="fas fa-users f-2x mr-1"></i>
               <p class="user-paragraf">
-                Users settings
+                User settings
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
@@ -43,14 +43,14 @@
                 <a href=" {{ route('admin.user') }} " class="nav-link">
                   <i class="nav-icon fas fa-user"></i>
                   <p>
-                    Users
+                    User
                   </p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{ route('admin.role') }}" class="nav-link">
                   <i class="fas fa-user-tag"></i>
-                  <p>Roles</p>
+                  <p>Role</p>
                 </a>
               </li>
               <li class="nav-item">
@@ -66,7 +66,15 @@
             <a href="{{route('admin.menu')}}" class="nav-link">
             <i class="fas fa-bars ml-2"></i>
               <p class="ml-2">
-                Menus
+                Menu
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{route('admin.slider')}}" class="nav-link">
+            <i class="fas fa-sliders-h ml-2"></i>
+              <p class="ml-2">
+                Slider
               </p>
             </a>
           </li>
