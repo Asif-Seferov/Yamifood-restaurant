@@ -20,7 +20,9 @@
     <!-- /.content-header -->
     <!-- Slider list start -->
     <div class="col-12">
+        @can('create', App\Models\Slider::class)
         <div class="mb-3 text-right"><a href="{{route('admin.create-slider')}}" class="btn btn-danger"><i class="fas fa-plus"></i> Add Slider</a></div>
+        @endcan
         @if(count($sliders) > 0)
         <table class="table table-bordered table-hover">
             <thead>

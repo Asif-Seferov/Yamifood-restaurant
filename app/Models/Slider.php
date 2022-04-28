@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Storage;
 class Slider extends Model
 {
     use HasFactory;
-
+    protected $fillable = ['slider_img', 'slider_title', 'slider_description', 'slider_status', 'slider_btn_text', 'slider_btn_color', 'slider_btn_status'];
     public static function uploadImage(Request $request, $img = null){
         if($request->hasFile('slider_image')){
             if($img){

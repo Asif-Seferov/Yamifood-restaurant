@@ -29,12 +29,18 @@
                       <div class="col-sm-6">
                         <div class="form-group">
                             <label for="sliderTitle">Title</label>
-                            <input type="text" name="slider_title" class="form-control" id="sliderTitle">
+                            <input type="text" name="slider_title" class="form-control @error('slider_title') is-invalid @enderror" id="sliderTitle">
                         </div>
+                        @error('slider_title')
+                          <div class="text-danger">{{$message}}</div>
+                        @enderror
                         <div class="form-group">
                             <label for="sliderTitle">Description</label>
-                            <input type="text" name="slider_description" class="form-control" id="sliderTitle">
+                            <input type="text" name="slider_description" class="form-control @error('slider_description') is-invalid @enderror" id="sliderTitle">
                         </div>
+                        @error('slider_description')
+                            <div class="text-danger">{{$message}}</div>
+                        @enderror
                         <div class="d-flex justify-content-between mb-3">
                           <div class="custom-control custom-switch">
                             <input type="radio" class="custom-control-input" id="activeSlider" name="status_slider" value="active">
@@ -53,8 +59,11 @@
                           <div class="d-flex justify-content-between align-items-center slider-btn-blog">
                               <div class="form-group">
                                 <label for="sliderBtnText">Btn text</label>
-                                <input type="text" name="slider_btn_text" class="form-control" id="sliderBtnText">
+                                <input type="text" name="slider_btn_text" class="form-control @error('slider_btn_text') is-invalid @enderror" id="sliderBtnText">
                               </div>
+                              @error('slider_btn_text')
+                                <div class="text-danger">{{$message}}</div>
+                              @enderror
                               <div>
                                   <label for="sliderBtnColor">Btn Color</label><br>
                                   <input type="color" name="slider_btn_color" id="sliderBtnColor">
@@ -65,7 +74,7 @@
                       <div class="col-sm-6">
                       <div class="file-upload">
                           <div class="image-upload-wrap">
-                            <input class="file-upload-input" type='file' name="slider_image" onchange="readURL(this);" accept="image/*" />
+                            <input class="file-upload-input @error('slider_image') is-invalid @enderror" type='file' name="slider_image" onchange="readURL(this);" accept="image/*" />
                             <div class="drag-text">
                               <h3>File upload to here</h3>
                             </div>
@@ -76,9 +85,11 @@
                               <button type="button" onclick="removeUpload()" class="remove-image">Remove <span class="image-title">Uploaded Image</span></button>
                             </div>
                           </div>
+                          @error('slider_image')
+                        <div class="text-danger">{{$message}}</div>
+                        @enderror
                         </div>
                       </div>
-                         
                       </div>
                     </div>
                     <button type="submit" class="btn btn-success mt-3">Create</button>  

@@ -6,7 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Slider;
+use App\Http\Requests\SliderRequest;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Gate;
+
 
 
 class SliderController extends Controller
@@ -19,7 +22,9 @@ class SliderController extends Controller
     public function create(){
         return view('admin.sliders.create');
     }
-    public function store(Request $request){
+    public function store(SliderRequest $request){
+        $this->authorize('create', Slider::class);
+
         try{
             $data = $request->all();
             $data['slider_image'] = Slider::uploadImage($request);
